@@ -5,7 +5,7 @@ RUN apk add --no-cache \
   jpeg-dev \
   libpng-dev 
 
-RUN docker-php-ext-configure gd \
+RUN docker-php-ext-configure gd --with-jpeg \
   && docker-php-ext-install -j$(nproc) gd
 
 RUN wget -O- https://getcomposer.org/installer | php -- --install-dir=bin --filename=composer
