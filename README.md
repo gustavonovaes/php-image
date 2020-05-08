@@ -1,7 +1,21 @@
-# php-image
+php-image
+=========
 A library for doing simple things with images in PHP
 
+
+# Trying
+
+```sh
+  git clone https://github.com/gustavonovaes/php-image
+  cd php-image
+  docker-compose run -p 8080:8080 -S 0.0.0.0:8080 -t examples/ 
+```
+
+Open [http://localhost:8080](http://localhost:8080)
+
 # Examples
+
+![](examples/screenshot.png)
 
 ## Merging 2 images
 ```php
@@ -10,7 +24,8 @@ $imageB = Image::fromFile("b.png");
 
 $result = $imageA->merge($imageB);
 
-$result->save("result.png")
+$result->save("result.png");
+// or <img src="{$result->base64()}" />
 ```
 ## Compare changes
 

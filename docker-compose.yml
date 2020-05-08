@@ -1,0 +1,9 @@
+version: '3'
+services:
+  php:
+    dns: 
+      - 8.8.8.8
+    build: .
+    volumes: 
+      - .:/app
+    working_dir: /app
