@@ -176,14 +176,14 @@ class Image
         $gB = ($colorB >> 8) & 0xFF;
         $bB = $colorB & 0xFF;
 
-        $color = \imagecolorallocate(
+        $newColor = \imagecolorallocate(
           $newImage,
           ($rA + $rB) / 2,
           ($gA + $gB) / 2,
           ($bA + $bB) / 2
         );
 
-        \imagesetpixel($newImage, $x, $y, $color);
+        \imagesetpixel($newImage, $x, $y, $newColor);
       }
     }
 
@@ -200,21 +200,29 @@ class Image
     return \imagejpeg($this->image, $filePath, $compression);
   }
 
-  public function base64()
+  public function getData()
   {
     \ob_start();
     \imagepng($this->image, null);
-    $content = \ob_get_clean();
-    
-    return 'data:image/png;base64,' . \base64_encode($content);
+    return \ob_get_clean();
+  }
+
+  public function getDataJpeg($compression = 80)
+  {
+    \ob_start();
+    \imagejpeg($this->image, null, $compression);
+    return \ob_get_clean();
+  }
+
+  public function base64()
+  {
+    $data = $this->getData();
+    return 'data:image/png;base64,' . \base64_encode($data);
   }
 
   public function base64Jpeg(int $compression = 80)
   {
-    \ob_start();
-    \imagejpeg($this->image, null, $compression);
-    $content = \ob_get_clean();
-
-    return 'data:image/jpeg;base64,' . \base64_encode($content);
+    $data = $this->getDataJpeg($compression);
+    return 'data:image/jpeg;base64,' . \base64_encode($data);
   }
 }
